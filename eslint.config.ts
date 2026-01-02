@@ -10,6 +10,7 @@ export default [
             'build/',
             'src/generated/**',
             'node_modules/',
+            'prisma/',
             '**/*.js',
             '**/*.cjs',
         ],

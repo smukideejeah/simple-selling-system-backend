@@ -1,7 +1,10 @@
 node_modules
-package-lock.json
 build
-sequelize-meta.json
-config/config.json
-.env
+.env*
 coverage
+prisma/generated/lib
+.git
+.gitignore
+Dockerfile*
+docker-compose*
+npm-debug.log

@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import { PrismaClient } from './generated/lib/client';
 import { PrismaMariaDb } from '@prisma/adapter-mariadb';
-import { hash } from 'bcryptjs';
+import { hash } from 'bcrypt';
 
 const adapter = new PrismaMariaDb({
     host: process.env.DATABASE_HOST,

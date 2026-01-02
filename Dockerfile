@@ -1,7 +1,15 @@
 FROM node:24.11.1-alpine
+
 WORKDIR /app
+
+COPY package*.json .
+RUN npm ci
+
+COPY prisma ./prisma
+RUN npm run db:g
+
 COPY . .
-RUN npm i
+
 RUN npm run build
-RUN chmod +x ./init.sh
+
 CMD [ "npm", "start" ]

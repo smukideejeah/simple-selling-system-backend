@@ -1,7 +1,7 @@
 import request from 'supertest';
 import app from '../../../../app';
 import ProductDto from '../../../../shared/types/Product/Product.dto.type';
-import resetDatabases from '../../../../lib/resetDatabases';
+import { prisma } from '../../../../lib/prisma';
 
 describe('Testing the most critical routes of ProductsRouter', () => {
     const createdProducts: ProductDto[] = [];
@@ -63,6 +63,9 @@ describe('Testing the most critical routes of ProductsRouter', () => {
         }
     });
 
+    afterAll(async () => {
+        await prisma.$disconnect();
+    });
     it('GET /products - should return 200 and a list of paginated products', async () => {
         //Arrange
         const responseExpectStatus = 200;

@@ -37,11 +37,15 @@ export default class {
     getAll = async (req: Request, res: Response) => {
         const { search, cursor, take } = req.query;
 
-        const products = await this.service.getAll({
-            search: typeof search === 'string' ? search : undefined,
-            cursor: typeof cursor === 'string' ? JSON.parse(cursor) : undefined,
-            take: typeof take === 'string' ? parseInt(take) : undefined,
-        });
+        const products = await this.service.getAll(
+            {
+                search: typeof search === 'string' ? search : undefined,
+                cursor:
+                    typeof cursor === 'string' ? JSON.parse(cursor) : undefined,
+                take: typeof take === 'string' ? parseInt(take) : undefined,
+            },
+            req.user?.Role == 'VENDEDOR'
+        );
 
         return res.status(200).json(products);
     };

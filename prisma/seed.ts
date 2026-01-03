@@ -17,7 +17,20 @@ const adapter = new PrismaMariaDb({
 const prisma = new PrismaClient({ adapter });
 async function main() {
     const adminPasswordHash = await hash('admin123', 10);
+    const testAdminPasswordHash = await hash('testadmin123', 10);
     const vendorPasswordHash = await hash('vendedor123', 10);
+    const testVendorPasswordHash = await hash('testvendedor123', 10);
+
+    await prisma.users.upsert({
+        where: {Username: 'testAdmin'},
+        update: {},
+        create: {
+            Username: 'testAdmin',
+            Names: 'Test Admin',
+            Hash: testAdminPasswordHash,
+            Role: 'GESTOR',
+        },
+    });
 
     await prisma.users.upsert({
         where: { Username: 'admin' },
@@ -27,6 +40,17 @@ async function main() {
             Names: 'Administrador',
             Hash: adminPasswordHash,
             Role: 'GESTOR',
+        },
+    });
+
+    await prisma.users.upsert({
+        where: { Username: 'testVendedor' },
+        update: {},
+        create: {
+            Username: 'testVendedor',
+            Names: 'Test Vendedor',
+            Hash: testVendorPasswordHash,
+            Role: 'VENDEDOR',
         },
     });
 

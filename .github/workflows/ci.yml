@@ -9,7 +9,7 @@ jobs:
 
     services:
       mysql:
-        image: mysql:8.4.6-6
+        image: mysql:lts
         env:
           MYSQL_ROOT_PASSWORD: rootpassword
           MYSQL_DATABASE: test

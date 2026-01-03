@@ -3,11 +3,16 @@ import { PrismaClient } from './generated/lib/client';
 import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 import { hash } from 'bcrypt';
 
+
 const adapter = new PrismaMariaDb({
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_NAME,
+    connectionLimit: 5,
+    connectTimeout: 15000,
+    acquireTimeout: 15000,
+    allowPublicKeyRetrieval: true,
 });
 const prisma = new PrismaClient({ adapter });
 async function main() {

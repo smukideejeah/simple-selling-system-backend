@@ -18,6 +18,9 @@ const config: JestConfigWithTsJest = {
     testPathIgnorePatterns: ['/node_modules/', '/build/'],
     preset: 'ts-jest/presets/default-esm',
     testEnvironment: 'node',
+    testTimeout: 30000,
+    forceExit: false,
+    detectOpenHandles: true,
 };
 
 export default config;

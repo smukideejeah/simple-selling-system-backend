@@ -17,11 +17,6 @@
     "moduleResolution": "NodeNext",
     "esModuleInterop": true, 
     "resolveJsonModule": true,
-    "ignoreDeprecations": "6.0",
-    "baseUrl": ".",
-    "paths": {
-      "PrismaGenerated": ["prisma/generated/lib"]
-    }
   },
   
   "include": [

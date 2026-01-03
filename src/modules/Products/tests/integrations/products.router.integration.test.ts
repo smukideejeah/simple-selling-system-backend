@@ -63,9 +63,7 @@ describe('Testing the most critical routes of ProductsRouter', () => {
         }
     });
 
-    afterAll(async () => {
-        await prisma.$disconnect();
-    });
+
     it('GET /products - should return 200 and a list of paginated products', async () => {
         //Arrange
         const responseExpectStatus = 200;
@@ -127,9 +125,13 @@ describe('Testing the most critical routes of ProductsRouter', () => {
             .post('/v1/products')
             .send(newProductData);
 
+        
+
         //Assert
         expect(response.status).toBe(responseExpectStatus);
         expect(response.body).toMatchObject(newProductData);
+
+        await prisma.products.deleteMany({ where: { ID: response.body.ID } });
     });
 
     it('POST /products - Should return 400 when required fields are missing', async () => {
@@ -199,5 +201,12 @@ describe('Testing the most critical routes of ProductsRouter', () => {
             `/v1/products/${productToDelete.ID}`
         );
         expect(getResponse.status).toBe(404);
+    });
+
+    afterAll(async () => {
+        for(const prod of createdProducts) {
+            await prisma.products.deleteMany({ where: { ID: prod.ID } });
+        }
+        await prisma.$disconnect();
     });
 });

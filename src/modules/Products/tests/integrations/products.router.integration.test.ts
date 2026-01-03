@@ -5,8 +5,15 @@ import { prisma } from '../../../../lib/prisma';
 
 describe('Testing the most critical routes of ProductsRouter', () => {
     const createdProducts: ProductDto[] = [];
+    let adminToken: string;
 
     beforeAll(async () => {
+        const login = await request(app).post('/v1/auth').send({
+            Username: 'testAdmin',
+            Password: 'testadmin123',
+        });
+        adminToken = login.body.token;
+
         const productsToCreate = [
             {
                 Code: 'P001',
@@ -58,7 +65,9 @@ describe('Testing the most critical routes of ProductsRouter', () => {
             },
         ];
         for (const prod of productsToCreate) {
-            const response = await request(app).post('/v1/products').send(prod);
+            const response = await request(app)
+            .post('/v1/products').send(prod)
+            .set('Authorization', `Bearer ${adminToken}`);
             createdProducts.push(response.body);
         }
     });
@@ -71,6 +80,7 @@ describe('Testing the most critical routes of ProductsRouter', () => {
         //Act
         const response = await request(app)
             .get('/v1/products')
+            .set('Authorization', `Bearer ${adminToken}`)
             .query({ take: 3 });
 
         //Assert
@@ -85,9 +95,11 @@ describe('Testing the most critical routes of ProductsRouter', () => {
         const responseExpectStatus = 200;
 
         //Act
-        const response = await request(app).get(
+        const response = await request(app)
+        .get(
             `/v1/products/${productToGet.ID}`
-        );
+        )
+        .set('Authorization', `Bearer ${adminToken}`);
 
         //Assert
         expect(response.status).toBe(responseExpectStatus);
@@ -100,9 +112,11 @@ describe('Testing the most critical routes of ProductsRouter', () => {
         const responseExpectStatus = 404;
 
         //Act
-        const response = await request(app).get(
+        const response = await request(app)
+        .get(
             `/v1/products/${nonExistentProductId}`
-        );
+        )
+        .set('Authorization', `Bearer ${adminToken}`);
 
         //Assert
         expect(response.status).toBe(responseExpectStatus);
@@ -123,6 +137,7 @@ describe('Testing the most critical routes of ProductsRouter', () => {
         //Act
         const response = await request(app)
             .post('/v1/products')
+            .set('Authorization', `Bearer ${adminToken}`)
             .send(newProductData);
 
         
@@ -148,6 +163,7 @@ describe('Testing the most critical routes of ProductsRouter', () => {
         //Act
         const response = await request(app)
             .post('/v1/products')
+            .set('Authorization', `Bearer ${adminToken}`)
             .send(incompleteProductData);
 
         //Assert
@@ -160,9 +176,11 @@ describe('Testing the most critical routes of ProductsRouter', () => {
         const responseExpectStatus = 200;
 
         //Act
-        const response = await request(app).get(
-            `/v1/products/code/${productToGet.Code}`
-        );
+        const response = await request(app)
+            .get(
+                `/v1/products/code/${productToGet.Code}`
+            )
+            .set('Authorization', `Bearer ${adminToken}`);
 
         //Assert
         expect(response.status).toBe(responseExpectStatus);
@@ -175,9 +193,9 @@ describe('Testing the most critical routes of ProductsRouter', () => {
         const responseExpectStatus = 404;
 
         //Act
-        const response = await request(app).get(
-            `/v1/products/code/${nonExistentProductCode}`
-        );
+        const response = await request(app)
+        .get(`/v1/products/code/${nonExistentProductCode}`)
+        .set('Authorization', `Bearer ${adminToken}`);
 
         //Assert
         expect(response.status).toBe(responseExpectStatus);
@@ -189,9 +207,11 @@ describe('Testing the most critical routes of ProductsRouter', () => {
         const responseExpectStatus = 200;
 
         //Act
-        const response = await request(app).delete(
+        const response = await request(app)
+        .delete(
             `/v1/products/${productToDelete.ID}`
-        );
+        )
+        .set('Authorization', `Bearer ${adminToken}`);
 
         //Assert
         expect(response.status).toBe(responseExpectStatus);
@@ -199,7 +219,8 @@ describe('Testing the most critical routes of ProductsRouter', () => {
         //Verify deletion
         const getResponse = await request(app).get(
             `/v1/products/${productToDelete.ID}`
-        );
+        ).
+        set('Authorization', `Bearer ${adminToken}`);
         expect(getResponse.status).toBe(404);
     });
 

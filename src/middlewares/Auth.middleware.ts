@@ -4,11 +4,7 @@ import { jwtVerify } from 'jose';
 import AuthToken from '../shared/types/Auth/Auth.token.type.js';
 import secret from '../lib/JwtSecret.js';
 
-export default async function (
-    Req: Request,
-    Res: Response,
-    Next: NextFunction
-) {
+export default async function (Req: Request, _: Response, Next: NextFunction) {
     const authHeader = Req.headers.authorization;
     if (!authHeader) throw new HTTPError('Authorization header missing', 401);
 
@@ -21,7 +17,7 @@ export default async function (
 
         Next();
     } catch (error) {
-        console.error((error as Error).name);
+        console.log('Token verification error:', typeof error);
         throw new HTTPError('Invalid token', 403);
     }
 }

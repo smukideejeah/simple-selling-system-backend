@@ -24,31 +24,37 @@ export default class {
         });
     }
 
-    async findAll(searchParams: { cursor?: string; take?: number, search?: string }) {
+    async findAll(searchParams: {
+        cursor?: string;
+        take?: number;
+        search?: string;
+    }) {
         const { cursor, take = 20 } = searchParams;
 
         const discounts = await prisma.discounts.findMany({
             take: take + 1,
             skip: cursor ? 1 : 0,
             cursor: cursor ? { ID: cursor } : undefined,
-            where: searchParams.search ? {
-                OR: [
-                    {
-                        product: {
-                            Name: {
-                                contains: searchParams.search,
-                            },
-                        },
-                    },
-                    {
-                        product: {
-                            Code: {
-                                contains: searchParams.search,
-                            },
-                        },
-                    },
-                ],
-            } : undefined,
+            where: searchParams.search
+                ? {
+                      OR: [
+                          {
+                              product: {
+                                  Name: {
+                                      contains: searchParams.search,
+                                  },
+                              },
+                          },
+                          {
+                              product: {
+                                  Code: {
+                                      contains: searchParams.search,
+                                  },
+                              },
+                          },
+                      ],
+                  }
+                : undefined,
             include: {
                 product: true,
             },

@@ -40,6 +40,9 @@ model Products {
 
   Discount Discounts?
   orderItems OrderItems[]
+
+  @@index([CreatedAt])
+  @@unique([ID, Name], name: "name_id")
 }
 
 model Discounts {
@@ -54,6 +57,8 @@ model Discounts {
   UpdatedAt DateTime @updatedAt @db.Timestamp(6)
 
   product Products @relation(fields: [ProductID], references: [ID], onDelete: Restrict)
+
+  @@index([CreatedAt])
 }
 
 model Orders {

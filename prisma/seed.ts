@@ -3,16 +3,35 @@ import { PrismaClient } from './generated/lib/client';
 import { PrismaMariaDb } from '@prisma/adapter-mariadb';
 import { hash } from 'bcrypt';
 
+
 const adapter = new PrismaMariaDb({
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_NAME,
+    port: Number(process.env.DATABASE_PORT) || 3306,
+    connectionLimit: 5,
+    connectTimeout: 15000,
+    acquireTimeout: 15000,
+    allowPublicKeyRetrieval: true,
 });
 const prisma = new PrismaClient({ adapter });
 async function main() {
     const adminPasswordHash = await hash('admin123', 10);
+    const testAdminPasswordHash = await hash('testadmin123', 10);
     const vendorPasswordHash = await hash('vendedor123', 10);
+    const testVendorPasswordHash = await hash('testvendedor123', 10);
+
+    await prisma.users.upsert({
+        where: {Username: 'testAdmin'},
+        update: {},
+        create: {
+            Username: 'testAdmin',
+            Names: 'Test Admin',
+            Hash: testAdminPasswordHash,
+            Role: 'GESTOR',
+        },
+    });
 
     await prisma.users.upsert({
         where: { Username: 'admin' },
@@ -22,6 +41,17 @@ async function main() {
             Names: 'Administrador',
             Hash: adminPasswordHash,
             Role: 'GESTOR',
+        },
+    });
+
+    await prisma.users.upsert({
+        where: { Username: 'testVendedor' },
+        update: {},
+        create: {
+            Username: 'testVendedor',
+            Names: 'Test Vendedor',
+            Hash: testVendorPasswordHash,
+            Role: 'VENDEDOR',
         },
     });
 

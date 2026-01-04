@@ -13,6 +13,7 @@ export default [
             'prisma/',
             '**/*.js',
             '**/*.cjs',
+            '**/*.test.ts',
         ],
     },
     js.configs.recommended,

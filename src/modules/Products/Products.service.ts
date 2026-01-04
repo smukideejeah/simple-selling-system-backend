@@ -1,3 +1,4 @@
+import { Prisma } from '../../../prisma/generated/lib/client.js';
 import ProductCursor from '../../shared/types/Product/Product.cursor.type.js';
 import ProductInput from '../../shared/types/Product/Product.input.type.js';
 import HTTPError from '../../shared/utils/HTTPError.js';
@@ -49,13 +50,49 @@ export default class {
         return mapProduct(product);
     }
 
+    async updateOrThrow(id: string, data: Omit<Partial<ProductInput>, 'Code'>) {
+        try {
+            const product = await this.repository.update(id, data);
+            return mapProduct(product);
+        } catch (err) {
+            if (err instanceof Prisma.PrismaClientKnownRequestError)
+                if (err.code == 'P2025')
+                    throw new HTTPError('Product not found', 404);
+
+            throw err;
+        }
+    }
+
     async update(id: string, data: Omit<Partial<ProductInput>, 'Code'>) {
-        const product = await this.repository.update(id, data);
-        return mapProduct(product);
+        try {
+            const product = await this.updateOrThrow(id, data);
+            return product;
+        } catch (err) {
+            console.log('Error updating product:', (err as Error).message);
+            return null;
+        }
+    }
+
+    async deleteOrThrow(id: string) {
+        try {
+            const product = await this.repository.delete(id);
+            return mapProduct(product);
+        } catch (err) {
+            if (err instanceof Prisma.PrismaClientKnownRequestError)
+                if (err.code == 'P2025')
+                    throw new HTTPError('Product not found', 404);
+
+            throw err;
+        }
     }
 
     async delete(id: string) {
-        const product = await this.repository.delete(id);
-        return mapProduct(product);
+        try {
+            const product = await this.deleteOrThrow(id);
+            return product;
+        } catch (err) {
+            console.log('Error deleting product:', (err as Error).message);
+            return null;
+        }
     }
 }

@@ -101,7 +101,7 @@ export default class {
         if (z.uuid().safeParse(id).success === false)
             throw new HTTPError('Invalid product ID', 400);
 
-        const product = await this.service.update(id, req.body);
+        const product = await this.service.updateOrThrow(id, req.body);
         return res.status(200).json(product);
     };
 
@@ -110,7 +110,7 @@ export default class {
         if (z.uuid().safeParse(id).success === false)
             throw new HTTPError('Invalid product ID', 400);
 
-        const product = await this.service.delete(id);
+        const product = await this.service.deleteOrThrow(id);
         return res.status(200).json(product);
     };
 }

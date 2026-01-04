@@ -7,8 +7,10 @@ export default function (
     res: Response,
     _next: NextFunction
 ) {
-    if (err instanceof HTTPError)
+    if (err instanceof HTTPError) {
         return res.status(err.status).json({ message: err.message });
+    }
+
     console.error(err);
     return res
         .status(500)

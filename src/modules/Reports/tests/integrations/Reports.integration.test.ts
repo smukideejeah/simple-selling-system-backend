@@ -11,6 +11,7 @@ describe('Reports Integration Tests', () => {
 
             await prisma.orderItems.deleteMany();
             await prisma.orders.deleteMany();
+            await prisma.discounts.deleteMany();
             await prisma.products.deleteMany();
             await prisma.users.deleteMany({ where: { Username: 'testuser' } });
         });
@@ -119,6 +120,7 @@ describe('Reports Integration Tests', () => {
     afterAll(async () => {
         await prisma.orderItems.deleteMany();
         await prisma.orders.deleteMany();
+        await prisma.discounts.deleteMany();
         await prisma.products.deleteMany();
         await prisma.users.deleteMany({ where: { Username: 'testuser' } });
         await prisma.$disconnect();

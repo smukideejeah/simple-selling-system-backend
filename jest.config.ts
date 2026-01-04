@@ -21,6 +21,7 @@ const config: JestConfigWithTsJest = {
     testTimeout: 30000,
     forceExit: false,
     detectOpenHandles: true,
+    globalSetup: './jest.global.setup.ts',
 };
 
 export default config;

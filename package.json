@@ -13,6 +13,7 @@
     "db:m": "prisma migrate dev",
     "db:s": "prisma db seed",
     "db:deploy": "prisma migrate deploy",
+    "db:reset": "prisma migrate reset --force",
     "prepare": "husky",
     "test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --runInBand",
     "test:watch": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --runInBand --watchAll",

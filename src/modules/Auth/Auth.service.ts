@@ -22,6 +22,10 @@ export default class {
             .setExpirationTime('1h')
             .sign(secret);
 
-        return token;
+        return {
+            token,
+            role: user.Role,
+            userId: user.ID,
+        };
     }
 }

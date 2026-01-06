@@ -14,4 +14,11 @@ export default class {
 
         return Res.status(200).json(user);
     };
+
+    me = async (Req: Request, Res: Response) => {
+        return Res.status(200).json({
+            userId: Req.user?.UserId,
+            role: Req.user?.Role,
+        });
+    };
 }

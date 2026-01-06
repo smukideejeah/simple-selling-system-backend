@@ -17,10 +17,10 @@ export function mapProduct(data: ProductsWithDiscount): ProductDto | null {
               IsActive: data.IsActive,
               Discount: data.Discount
                   ? {
-                        percentage: Number(data.Discount.Value),
-                        isActive: data.Discount.IsActive,
-                        startDate: data.Discount.StartDate,
-                        endDate: data.Discount.EndDate,
+                        Percentage: Number(data.Discount.Value),
+                        IsActive: data.Discount.IsActive,
+                        StartDate: data.Discount.StartDate,
+                        EndDate: data.Discount.EndDate,
                     }
                   : null,
           };

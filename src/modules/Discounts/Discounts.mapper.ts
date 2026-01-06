@@ -11,7 +11,7 @@ export function mapDiscount(data: DiscountsWithProduct): DiscountDto {
         Percentage: Number(data.Value),
         ValidFrom: data.StartDate,
         ValidTo: data.EndDate,
-        isActive: data.IsActive,
+        IsActive: data.IsActive,
         Product: {
             ID: data.Product.ID,
             Code: data.Product.Code,

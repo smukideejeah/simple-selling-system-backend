@@ -39,7 +39,7 @@ describe('Testing the most important methods of DiscountsService', () => {
                 Percentage: 15,
                 ValidFrom: new Date('2024-01-01'),
                 ValidTo: new Date('2024-01-31'),
-                isActive: true,
+                IsActive: true,
             };
 
             const discountData = {
@@ -84,7 +84,7 @@ describe('Testing the most important methods of DiscountsService', () => {
                 Percentage: 15,
                 ValidFrom: new Date('2024-01-01'),
                 ValidTo: new Date('2024-01-31'),
-                isActive: true,
+                IsActive: true,
             };
 
             const productWithDiscount = {
@@ -99,7 +99,7 @@ describe('Testing the most important methods of DiscountsService', () => {
                     percentage: 10,
                     startDate: new Date('2023-12-01'),
                     endDate: new Date('2023-12-31'),
-                    isActive: false,
+                    IsActive: false,
                 },
             };
 

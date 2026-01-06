@@ -8,8 +8,8 @@ export default class {
     constructor(private readonly Service: DiscountsService) {}
 
     getById = async (Req: Request, Res: Response) => {
-        const { DiscountId } = Req.params;
-        const discount = await this.Service.getByIdOrThrow(DiscountId);
+        const { id } = Req.params;
+        const discount = await this.Service.getByIdOrThrow(id);
         return Res.status(200).json(discount);
     };
 
@@ -32,7 +32,7 @@ export default class {
         )
             throw new HTTPError('Invalid or missing ProductID', 400);
         if (
-            typeof data.Percentage !== 'number' ||
+            !Number.isFinite(Number(data.Percentage)) ||
             data.Percentage <= 0 ||
             data.Percentage > 100
         )
@@ -41,7 +41,7 @@ export default class {
             throw new HTTPError('Invalid or missing ValidFrom date', 400);
         if (!data.ValidTo || isNaN(new Date(data.ValidTo).getTime()))
             throw new HTTPError('Invalid or missing ValidTo date', 400);
-        if (typeof data.isActive !== 'boolean')
+        if (typeof data.IsActive !== 'boolean')
             throw new HTTPError('Invalid or missing isActive flag', 400);
 
         const discount = await this.Service.createOrThrow(data);
@@ -49,7 +49,7 @@ export default class {
     };
 
     update = async (Req: Request, Res: Response) => {
-        const { DiscountId } = Req.params;
+        const { id } = Req.params;
         const data: Partial<DiscountInput> = Req.body;
 
         if (
@@ -59,7 +59,7 @@ export default class {
             throw new HTTPError('Invalid ProductID', 400);
         if (
             data.Percentage !== undefined &&
-            (typeof data.Percentage !== 'number' ||
+            (!Number.isFinite(Number(data.Percentage)) ||
                 data.Percentage <= 0 ||
                 data.Percentage > 100)
         )
@@ -68,16 +68,16 @@ export default class {
             throw new HTTPError('Invalid ValidFrom date', 400);
         if (data.ValidTo && isNaN(new Date(data.ValidTo).getTime()))
             throw new HTTPError('Invalid ValidTo date', 400);
-        if (data.isActive !== undefined && typeof data.isActive !== 'boolean')
-            throw new HTTPError('Invalid isActive flag', 400);
+        if (data.IsActive !== undefined && typeof data.IsActive !== 'boolean')
+            throw new HTTPError('Invalid IsActive flag', 400);
 
-        const discount = await this.Service.updateOrThrow(DiscountId, data);
+        const discount = await this.Service.updateOrThrow(id, data);
         return Res.status(200).json(discount);
     };
 
     delete = async (Req: Request, Res: Response) => {
-        const { DiscountId } = Req.params;
-        await this.Service.deleteOrThrow(DiscountId);
+        const { id } = Req.params;
+        await this.Service.deleteOrThrow(id);
         return Res.status(204).send();
     };
 }

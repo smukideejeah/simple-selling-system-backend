@@ -72,7 +72,7 @@ export default class {
                 Value: data.Percentage,
                 StartDate: data.ValidFrom,
                 EndDate: data.ValidTo,
-                IsActive: data.isActive,
+                IsActive: data.IsActive,
             },
             include: {
                 product: true,
@@ -91,7 +91,7 @@ export default class {
                 Value: data.Percentage,
                 StartDate: data.ValidFrom,
                 EndDate: data.ValidTo,
-                IsActive: data.isActive,
+                IsActive: data.IsActive,
             },
             include: {
                 product: true,

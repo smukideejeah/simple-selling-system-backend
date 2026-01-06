@@ -86,9 +86,9 @@ describe('Reports Integration Tests', () => {
 
             //Assert
             expect(report).toHaveLength(2);
-            expect(report[0].productId).toBe(product2.ID);
+            expect(report[0].productId).toBe(product2.Code);
             expect(report[0].total).toBe(60.0);
-            expect(report[1].productId).toBe(product1.ID);
+            expect(report[1].productId).toBe(product1.Code);
             expect(report[1].total).toBe(30.0);
         });
     });

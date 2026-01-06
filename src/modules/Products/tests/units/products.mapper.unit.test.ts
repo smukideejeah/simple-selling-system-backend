@@ -41,10 +41,10 @@ describe('Testing the most important scenarios of products.mapper', () => {
             Measure: 'UNIDAD',
             IsActive: productData.IsActive,
             Discount: {
-                percentage: 15,
-                isActive: productData.Discount!.IsActive,
-                startDate: productData.Discount!.StartDate,
-                endDate: productData.Discount!.EndDate,
+                Percentage: 15,
+                IsActive: productData.Discount!.IsActive,
+                StartDate: productData.Discount!.StartDate,
+                EndDate: productData.Discount!.EndDate,
             },
         });
     });

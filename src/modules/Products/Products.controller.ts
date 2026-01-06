@@ -36,7 +36,6 @@ export default class {
 
     getAll = async (req: Request, res: Response) => {
         const { search, cursor, take } = req.query;
-
         const products = await this.service.getAll(
             {
                 search: typeof search === 'string' ? search : undefined,
@@ -77,7 +76,7 @@ export default class {
                 'Invalid or missing product description, it must be at least 10 characters long',
                 400
             );
-        if (Price === undefined || typeof Price !== 'number' || Price < 0)
+        if (Price === undefined || !Number.isFinite(Number(Price)) || Price < 0)
             throw new HTTPError(
                 'Invalid or missing product price, it must be a non-negative number',
                 400

@@ -3,7 +3,7 @@ type DiscountInput = {
     Percentage: number;
     ValidFrom: Date;
     ValidTo: Date;
-    isActive: boolean;
+    IsActive: boolean;
 };
 
 export default DiscountInput;

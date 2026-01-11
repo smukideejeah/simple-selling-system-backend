@@ -5,7 +5,7 @@ type DiscountPaginationDto = {
         Percentage: number;
         ValidFrom: Date;
         ValidTo: Date;
-        isActive: boolean;
+        IsActive: boolean;
         Product: {
             ID: string;
             Code: string;

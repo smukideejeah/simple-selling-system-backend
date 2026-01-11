@@ -11,7 +11,7 @@ export default class {
         const report = reportData.map((item) => {
             const product = products.find((p) => p.ID === item.ProductID);
             return {
-                productId: item.ProductID,
+                productId: product ? product.Code : item.ProductID,
                 productName: product ? product.Name : 'Unknown Product',
                 total: Number(item._sum.TotalItem) || 0,
             };

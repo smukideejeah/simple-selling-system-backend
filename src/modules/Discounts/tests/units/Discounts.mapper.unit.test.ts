@@ -37,7 +37,7 @@ describe('Testing the most important scenarios of products.mapper', () => {
             Percentage: 15,
             ValidFrom: discountData.StartDate,
             ValidTo: discountData.EndDate,
-            isActive: discountData.IsActive,
+            IsActive: discountData.IsActive,
             Product: {
                 ID: discountData.Product.ID,
                 Code: discountData.Product.Code,

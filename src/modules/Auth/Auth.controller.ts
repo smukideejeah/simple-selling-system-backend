@@ -7,9 +7,18 @@ export default class {
 
     auth = async (Req: Request, Res: Response) => {
         const { Username, Password } = Req.body;
-        const token = await this.Service.verifyCredentials(Username, Password);
-        if (!token) throw new HTTPError('Invalid credentials', 401);
+        if (!Username || !Password)
+            throw new HTTPError('Username and Password are required', 400);
+        const user = await this.Service.verifyCredentials(Username, Password);
+        if (!user) throw new HTTPError('Invalid credentials', 401);
 
-        return Res.status(200).json({ token });
+        return Res.status(200).json(user);
+    };
+
+    me = async (Req: Request, Res: Response) => {
+        return Res.status(200).json({
+            userId: Req.user?.UserId,
+            role: Req.user?.Role,
+        });
     };
 }

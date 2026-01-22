@@ -1,15 +1,8 @@
 import { Router } from 'express';
-import DiscountsRepository from './Discounts.repository.js';
-import DiscountsService from './Discounts.service.js';
-import DiscountsController from './Discounts.controller.js';
 import RolesMiddleware from '../../middlewares/Roles.middleware.js';
+import { Controller } from './Discounts.di.js';
 
 const DiscountsRouteV1 = Router();
-
-//Composition Root
-const Repository = new DiscountsRepository();
-const Service = new DiscountsService(Repository);
-const Controller = new DiscountsController(Service);
 
 DiscountsRouteV1.use(RolesMiddleware('GESTOR'));
 

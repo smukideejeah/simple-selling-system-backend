@@ -100,6 +100,44 @@ npm run prepare
 ```bash
 npm run watch
 ```
+7. Generar Token de autenticación
+   Antes de interactuar con el api, primero se necesita generar el token de acceso.
+
+```
+Usuario Administrador 
+  - user: admin
+  - pass: admin123
+
+Usuario Vendedor
+  - user: vendedor
+  - pass: vendedor123
+
+Las credenciales se pueden encontrar en el seed en: prisma > seed.ts
+```
+
+> Para generar el token debes utilizar la ruta `/v1/auth/`
+
+Ejemplo de generación de token
+```bash
+curl --location 'http://localhost:4002/v1/auth' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJVc2VySWQiOiIxNGNhZTMyMC05MTU4LTRiZmMtYWQ1Ny00NDQyYTAzMTIwNWMiLCJSb2xlIjoiR0VTVE9SIiwiaWF0IjoxNzY3NjgyMDUwLCJleHAiOjE3Njc3Njg0NTB9.m2LPKrbK0kZfXgoH8j1whF3rGe3JKAL_DQNx4t1BNdE' \
+--data '{
+    "Username": "admin",
+    "Password": "admin123"
+}'
+```
+
+Respuesta Json:
+
+```json
+{
+    "token": "eyJh...",
+    "role": "GESTOR",
+    "userId": "21d3..."
+}
+```
+
 ### Control de calidad y coherencia del estilo del código
 Se utiliza *eslint* para analizar el código, esto asegura que el estilo del desarrollo sea consistente, se detecten errores de sintaxis y se cumplan con las buenas prácticas en typescript.
 
@@ -226,3 +264,4 @@ Las pruebas se deben ejecutar únicamente con una base de datos local de pruebas
 - Descuentos genéricos
 - Gestión de usuarios
 - PostgreSQL como base de datos
+

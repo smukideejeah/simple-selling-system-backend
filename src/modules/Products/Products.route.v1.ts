@@ -1,15 +1,8 @@
 import { Router } from 'express';
-import ProductsRepository from './Products.repository.js';
-import ProductsService from './Products.service.js';
-import ProductsController from './Products.controller.js';
 import RolesMiddleware from '../../middlewares/Roles.middleware.js';
+import { Controller } from './Products.di.js';
 
 const ProductsRouteV1 = Router();
-
-//Composition Root
-const Repository = new ProductsRepository();
-const Service = new ProductsService(Repository);
-const Controller = new ProductsController(Service);
 
 ProductsRouteV1.get('/', Controller.getAll);
 ProductsRouteV1.get('/code/:code', Controller.getByCode);
